@@ -9,15 +9,10 @@
         body { font-family: "Georgia", serif; overflow: hidden; background-color: #000; width: 100vw; height: 100vh; }
         
         .slide {
-            height: 100vh; width: 100vw; 
-            position: absolute; top: 0; left: 0;
+            height: 100vh; width: 100vw; position: absolute; top: 0; left: 0;
             background-size: cover; background-position: center; background-repeat: no-repeat;
-            text-align: center; padding: 20px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1.5s ease-in-out, visibility 1.5s;
-            z-index: 1;
+            text-align: center; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+            opacity: 0; visibility: hidden; transition: opacity 1.5s ease-in-out, visibility 1.5s; z-index: 1;
         }
 
         .slide.active { opacity: 1; visibility: visible; z-index: 5; }
@@ -25,54 +20,43 @@
         .slide-text {
             font-family: "Georgia", serif; font-weight: bold; font-style: italic;
             color: black; text-shadow: -1.5px -1.5px 0 #ff0000, 1.5px -1.5px 0 #ff0000, -1.5px 1.5px 0 #ff0000, 1.5px 1.5px 0 #ff0000;
-            z-index: 10; line-height: 1.4; pointer-events: none;
-            animation: fadeInOut 3.5s ease-in-out infinite alternate;
+            z-index: 10; line-height: 1.4; pointer-events: none; animation: fadeInOut 3.5s ease-in-out infinite alternate;
         }
 
-        @keyframes fadeInOut {
-            0% { opacity: 0.5; transform: translateY(0px); }
-            100% { opacity: 1; transform: translateY(-8px); }
-        }
-
-        #s1 .slide-text { font-size: 2.8rem; margin-top: 10vh; }
-        #s2 .slide-text { font-size: 1.7rem; max-width: 95%; margin-top: 8vh; }
-        #s4 .slide-text { font-size: 1.6rem; max-width: 95%; margin-top: 2vh; }
+        @keyframes fadeInOut { 0% { opacity: 0.5; transform: translateY(0px); } 100% { opacity: 1; transform: translateY(-8px); } }
 
         .fancy-btn {
-            margin-top: 30px; padding: 18px 40px; font-size: 1.3rem;
-            font-family: "Georgia", serif; font-weight: bold; color: white;
-            background: linear-gradient(135deg, #ff0000 0%, #8b0000 100%);
-            border: 3px solid #ffd700; border-radius: 60px; 
-            cursor: pointer; position: relative;
-            z-index: 999 !important;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            animation: floating 2s ease-in-out infinite;
+            margin-top: 30px; padding: 18px 40px; font-size: 1.3rem; font-family: "Georgia", serif; font-weight: bold; color: white;
+            background: linear-gradient(135deg, #ff0000 0%, #8b0000 100%); border: 3px solid #ffd700; border-radius: 60px; 
+            cursor: pointer; position: relative; z-index: 999 !important; box-shadow: 0 10px 20px rgba(0,0,0,0.5); animation: floating 2s ease-in-out infinite;
         }
 
         @keyframes floating { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* SUPER SIZED CARD CSS */
+        /* CARD STYLING */
         .card-container { width: 360px; height: 520px; perspective: 1500px; margin-top: 2vh; z-index: 10; }
         .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; cursor: pointer; }
+        
+        /* Rotation States */
         .flip-to-inside { transform: rotateY(-180deg); }
         .flip-to-back { transform: rotateY(-360deg); }
         
         .card-face { 
-            position: absolute; width: 100%; height: 100%; 
-            backface-visibility: hidden; border-radius: 20px; 
-            border: 6px solid #ffd700; display: flex; 
-            align-items: center; justify-content: center; 
-            background-size: cover; background-position: center; background-color: #fff; 
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; 
+            border-radius: 20px; border: 6px solid #ffd700; display: flex; 
+            align-items: center; justify-content: center; background-size: cover; background-position: center; background-color: #fff; 
         }
         
-        .card-front { background-image: url('card_front.png'); z-index: 2; } 
-        .card-inside { transform: rotateY(180deg); background-image: url('card_inside.png'); padding: 30px; flex-direction: column; z-index: 1; }
-        .card-back { transform: rotateY(360deg); background-image: url('card_back.png'); }
+        .card-front { background-image: url('card_front.png'); z-index: 3; } 
+        .card-inside { transform: rotateY(180deg); background-image: url('card_inside.png'); padding: 30px; flex-direction: column; z-index: 2; }
+        .card-back { transform: rotateY(360deg); background-image: url('card_back.png'); z-index: 1; }
+
+        /* Force Back face visible on final flip */
+        .show-back .card-back { z-index: 4 !important; }
 
         .inside-text { 
-            font-size: 1.4rem; color: #8b0000; font-weight: bold;
-            background: rgba(255,255,255,0.85); padding: 15px; 
-            border-radius: 15px; line-height: 1.3; text-align: center;
+            font-size: 1.4rem; color: #8b0000; font-weight: bold; background: rgba(255,255,255,0.85); 
+            padding: 15px; border-radius: 15px; line-height: 1.3; text-align: center;
         }
 
         .corner-tree { position: absolute; bottom: -30px; right: -50px; width: 450px; z-index: 2; pointer-events: none; }
@@ -86,90 +70,4 @@
 </head>
 <body>
 
-    <audio id="mySong" loop preload="auto">
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="slide active" id="s1" style="background-image: url('bg1.jpg');">
-        <h1 class="slide-text">hi haze ❤<br>this is for you 💕</h1>
-        <div class="fancy-btn" id="btn1">Open Your Gift 🎁</div>
-        <img src="tree.png" class="corner-tree">
-    </div>
-
-    <div class="slide" id="s2" style="background-image: url('bg2.jpg');">
-        <p class="slide-text">Merry Christmas, babe. I wish I was there with you right now, but even from far away, I’m thinking about you and missing you like crazy. I hope you’re smiling and feeling happy today, because that’s all I want. Can’t wait for the day we get to celebrate together and make our own little Christmas memories. Until then, just know you’re in my heart all the time, and I love you so much.</p>
-        <div class="fancy-btn" id="btn2">For your family ✨</div>
-    </div>
-
-    <div class="slide" id="s3" style="background-image: url('bg3.jpg');">
-        <div class="card-container">
-            <div class="card-inner" id="myCard">
-                <div class="card-face card-front">
-                    <p style="color: #8b0000; font-weight: bold; background: rgba(255,255,255,0.8); padding: 12px; border-radius: 10px; font-size: 1.2rem;">(Tap to Open 🎁)</p>
-                </div>
-                <div class="card-face card-inside">
-                    <p class="inside-text">Merry Christmas to you both. I know this is your first Christmas without her, and I can’t imagine how difficult that is. I just wanted you to know that you’re in my thoughts, and I hope today brings even a little warmth and comfort to your hearts. Wishing your family strength and peace.</p>
-                </div>
-                <div class="card-face card-back">
-                    <p style="color: #8b0000; font-weight: bold; background: rgba(255,255,255,0.8); padding: 12px; border-radius: 10px; font-size: 1.2rem;">Merry Christmas 🎄</p>
-                </div>
-            </div>
-        </div>
-        <div class="fancy-btn" id="btn3">One last thing... 💖</div>
-    </div>
-
-    <div class="slide" id="s4" style="background-image: url('bg4.jpeg'); background-color: #111;">
-        <img src="santa.png" class="santa-img">
-        <p class="slide-text">This Christmas, I just want you to know you’re in my prayers. I pray that God gives you strength on the days that feel heavy, peace when your heart feels tired, and comfort in the moments you miss her the most. I know this season isn’t easy, and you don’t have to be strong all the time. I’m here, always, in whatever way you need. I love you — not to hear it back, not to expect anything — just because it’s true and it comes from my heart.</p>
-    </div>
-
-    <script>
-        const song = document.getElementById('mySong');
-        let currentFlip = 0;
-
-        document.getElementById('btn1').addEventListener('click', function() { song.play(); goToSlide(2); });
-        document.getElementById('btn2').addEventListener('click', function() { goToSlide(3); });
-        document.getElementById('btn3').addEventListener('click', function() { goToSlide(4); });
-
-        document.getElementById('myCard').addEventListener('click', function() {
-            currentFlip++;
-            if (currentFlip === 1) this.classList.add('flip-to-inside');
-            else if (currentFlip === 2) { this.classList.remove('flip-to-inside'); this.classList.add('flip-to-back'); }
-            else { this.classList.remove('flip-to-back'); currentFlip = 0; }
-        });
-
-        function goToSlide(num) {
-            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-            document.getElementById('s' + num).classList.add('active');
-            if(num >= 2) { startSnow(); startHearts(); }
-        }
-
-        function startSnow() {
-            if (window.snowStarted) return;
-            window.snowStarted = true;
-            setInterval(() => {
-                const snow = document.createElement('div');
-                snow.innerHTML = '❄'; snow.className = 'snowflake';
-                snow.style.left = Math.random() * 100 + 'vw';
-                snow.style.animationDuration = Math.random() * 3 + 2 + 's';
-                document.body.appendChild(snow);
-                setTimeout(() => snow.remove(), 5000);
-            }, 150);
-        }
-
-        function startHearts() {
-            if (window.heartsStarted) return;
-            window.heartsStarted = true;
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.innerHTML = '❤'; heart.className = 'heart';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.bottom = "-5vh";
-                heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 6000);
-            }, 400);
-        }
-    </script>
-</body>
-</html>
+    <audio id="mySong" loop
