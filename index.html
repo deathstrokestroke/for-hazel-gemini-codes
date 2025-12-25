@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Haze 🤞</title>
+    <title>For Haze</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: "Georgia", serif; overflow-x: hidden; background-color: #000; }
@@ -16,7 +16,7 @@
 
         .active { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
 
-        /* General Text Animation */
+        /* Text Animation */
         .slide-text {
             font-family: "Georgia", serif; font-weight: bold; font-style: italic;
             color: black; text-shadow: -1.5px -1.5px 0 #ff0000, 1.5px -1.5px 0 #ff0000, -1.5px 1.5px 0 #ff0000, 1.5px 1.5px 0 #ff0000;
@@ -25,44 +25,57 @@
 
         @keyframes fadeInOut {
             0% { opacity: 0.5; transform: translateY(0px); }
-            100% { opacity: 1; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(-8px); }
         }
 
-        #s1 .slide-text { font-size: 2.8rem; margin-top: 15vh; }
-        #s2 .slide-text { font-size: 1.6rem; max-width: 95%; margin-top: 10vh; }
-        /* Slide 4 Text - Made Much Larger */
-        #s4 .slide-text { font-size: 1.5rem; max-width: 95%; margin-top: 2vh; line-height: 1.3; }
+        #s1 .slide-text { font-size: 2.8rem; margin-top: 12vh; }
+        #s2 .slide-text { font-size: 1.7rem; max-width: 95%; margin-top: 8vh; }
+        #s4 .slide-text { font-size: 1.5rem; max-width: 95%; margin-top: 2vh; }
 
-        /* CARD STYLING (Slide 3) */
-        .card-container { width: 320px; height: 420px; perspective: 1000px; margin-top: 5vh; z-index: 10; }
+        /* Fancy 3D Glowing Button */
+        .fancy-btn {
+            margin-top: 40px; padding: 20px 45px; font-size: 1.4rem;
+            font-family: "Georgia", serif; font-weight: bold; color: white;
+            background: linear-gradient(135deg, #ff0000 0%, #8b0000 100%);
+            border: 3px solid #ffd700; border-radius: 60px; cursor: pointer;
+            z-index: 20; box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 0 15px rgba(255, 215, 0, 0.5);
+            transition: 0.3s; animation: floating 2s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); box-shadow: 0 15px 25px rgba(255, 0, 0, 0.4); }
+            100% { transform: translateY(0px) scale(1); }
+        }
+
+        /* The Card Fix (Slide 3) - NOW PNG */
+        .card-container { width: 330px; height: 450px; perspective: 1200px; margin-top: 5vh; z-index: 10; }
         .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; cursor: pointer; }
         .flip-to-inside { transform: rotateY(180deg); }
         .flip-to-back { transform: rotateY(360deg); }
-        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; border: 4px solid #ffd700; box-shadow: 0 15px 35px rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; background-color: white; }
-        .card-front { background-image: url('card_front.jpg'); }
-        .card-inside { transform: rotateY(180deg); background-image: url('card_inside.jpg'); padding: 20px; flex-direction: column; }
-        .card-back { transform: rotateY(360deg); background-image: url('card_back.jpg'); }
-        .inside-text { font-size: 1.2rem !important; text-shadow: none !important; color: #b30000 !important; }
-
-        /* Santa Image Adjustments */
-        .santa-img { width: 220px; height: auto; margin-top: 5vh; z-index: 5; }
-
-        /* Fancy Button Style */
-        .fancy-btn {
-            margin-top: 30px; padding: 18px 35px; font-size: 1.3rem;
-            font-family: "Georgia", serif; font-weight: bold; color: white;
-            background: linear-gradient(45deg, #ff0000, #b30000);
-            border: 3px solid #ffd700; border-radius: 50px; cursor: pointer;
-            z-index: 20; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); animation: pulse 2s infinite;
+        
+        .card-face {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; border-radius: 15px;
+            border: 5px solid #ffd700; box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            display: flex; align-items: center; justify-content: center;
+            background-size: cover; background-position: center;
+            background-color: #fff;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        .card-front { background-image: url('card_front.png'); }
+        .card-inside { 
+            transform: rotateY(180deg); background-image: url('card_inside.png'); 
+            padding: 25px; flex-direction: column;
         }
+        .card-back { background-image: url('card_back.png'); transform: rotateY(360deg); }
+        .inside-text { font-size: 1.25rem !important; text-shadow: none !important; color: #8b0000 !important; }
 
-        .corner-tree { position: absolute; bottom: -10px; right: -10px; width: 280px; z-index: 5; }
+        /* Decorations */
+        .corner-tree { position: absolute; bottom: -20px; right: -20px; width: 350px; z-index: 5; pointer-events: none; }
+        .santa-img { width: 240px; margin-top: 4vh; z-index: 5; }
+
+        /* Snow & Hearts */
         .snowflake { position: fixed; top: -10px; color: white; user-select: none; z-index: 1; pointer-events: none; animation: fall linear forwards; }
         .heart { position: fixed; color: #ff0000; font-size: 1.5rem; user-select: none; z-index: 1; pointer-events: none; animation: float linear forwards; }
         @keyframes fall { to { transform: translateY(105vh); } }
@@ -89,11 +102,15 @@
     <div class="slide" id="s3" style="background-image: url('bg3.jpg');">
         <div class="card-container">
             <div class="card-inner" id="myCard" onclick="flipCard()">
-                <div class="card-face card-front"><p style="color: #b30000; font-weight: bold;">(Tap to Open)</p></div>
+                <div class="card-face card-front">
+                    <p style="color: #8b0000; font-weight: bold; background: rgba(255,255,255,0.7); padding: 5px;">(Tap to Open)</p>
+                </div>
                 <div class="card-face card-inside">
                     <p class="slide-text inside-text">Merry Christmas to you both. I know this is your first Christmas without her, and I can’t imagine how difficult that is. I just wanted you to know that you’re in my thoughts, and I hope today brings even a little warmth and comfort to your hearts. Wishing your family strength and peace.</p>
                 </div>
-                <div class="card-face card-back"><p style="color: #b30000; font-weight: bold;">Merry Christmas</p></div>
+                <div class="card-face card-back">
+                    <p style="color: #8b0000; font-weight: bold; background: rgba(255,255,255,0.7); padding: 5px;">Merry Christmas</p>
+                </div>
             </div>
         </div>
         <button class="fancy-btn" onclick="goToSlide(4)">One last thing... 💖</button>
@@ -157,4 +174,3 @@
     </script>
 </body>
 </html>
-
