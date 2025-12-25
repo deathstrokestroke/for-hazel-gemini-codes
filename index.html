@@ -6,12 +6,12 @@
     <title>For Haze🤞</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: "Georgia", serif; overflow-x: hidden; background-color: #000; }
+        body { font-family: "Georgia", serif; overflow: hidden; background-color: #000; width: 100vw; height: 100vh; }
         
         .slide {
-            height: 100vh; width: 100vw; display: none; position: relative;
+            height: 100vh; width: 100vw; display: none; position: absolute; top: 0; left: 0;
             background-size: cover; background-position: center; background-repeat: no-repeat;
-            text-align: center; padding: 30px; overflow: hidden;
+            text-align: center; padding: 30px; z-index: 1;
         }
 
         .active { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
@@ -19,7 +19,8 @@
         .slide-text {
             font-family: "Georgia", serif; font-weight: bold; font-style: italic;
             color: black; text-shadow: -1.5px -1.5px 0 #ff0000, 1.5px -1.5px 0 #ff0000, -1.5px 1.5px 0 #ff0000, 1.5px 1.5px 0 #ff0000;
-            z-index: 10; line-height: 1.4; animation: fadeInOut 3.5s ease-in-out infinite alternate;
+            z-index: 10; line-height: 1.4; pointer-events: none; /* Text won't block clicks */
+            animation: fadeInOut 3.5s ease-in-out infinite alternate;
         }
 
         @keyframes fadeInOut {
@@ -31,30 +32,27 @@
         #s2 .slide-text { font-size: 1.7rem; max-width: 95%; margin-top: 8vh; }
         #s4 .slide-text { font-size: 1.5rem; max-width: 95%; margin-top: 2vh; }
 
-        /* FIXED CLICKABLE BUTTON */
+        /* THE BUTTON - Forced to the absolute front */
         .fancy-btn {
-            margin-top: 40px; padding: 20px 45px; font-size: 1.4rem;
+            margin-top: 50px; padding: 20px 45px; font-size: 1.4rem;
             font-family: "Georgia", serif; font-weight: bold; color: white;
             background: linear-gradient(135deg, #ff0000 0%, #8b0000 100%);
             border: 3px solid #ffd700; border-radius: 60px; 
             cursor: pointer; position: relative;
-            z-index: 100; /* High z-index to ensure it sits on top */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            z-index: 999 !important; /* Extremely high priority */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
             animation: floating 2s ease-in-out infinite;
-            display: inline-block;
-            text-decoration: none;
+            display: block;
         }
 
         @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        .fancy-btn:active { transform: scale(0.95); }
-
         /* Card CSS */
-        .card-container { width: 330px; height: 450px; perspective: 1500px; margin-top: 5vh; z-index: 10; }
+        .card-container { width: 330px; height: 430px; perspective: 1500px; margin-top: 3vh; z-index: 10; }
         .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; cursor: pointer; }
         .flip-to-inside { transform: rotateY(-180deg); }
         .flip-to-back { transform: rotateY(-360deg); }
@@ -62,13 +60,12 @@
         .card-front { background-image: url('card_front.png'); z-index: 2; } 
         .card-inside { transform: rotateY(180deg); background-image: url('card_inside.png'); padding: 25px; flex-direction: column; z-index: 1; }
         .card-back { transform: rotateY(360deg); background-image: url('card_back.png'); }
-        .inside-text { font-size: 1.25rem !important; text-shadow: none !important; color: #8b0000 !important; background: rgba(255,255,255,0.7); border-radius: 10px; padding: 10px; }
 
-        /* GIANT TREE */
-        .corner-tree { position: absolute; bottom: -30px; right: -50px; width: 450px; z-index: 5; pointer-events: none; }
-        .santa-img { width: 240px; margin-top: 4vh; z-index: 5; }
+        /* GIANT TREE - Moved to background layer */
+        .corner-tree { position: absolute; bottom: -30px; right: -50px; width: 450px; z-index: 2; pointer-events: none; }
+        .santa-img { width: 220px; margin-top: 2vh; z-index: 5; }
 
-        /* SNOW & HEARTS */
+        /* FX */
         .snowflake { position: fixed; top: -10px; color: white; user-select: none; z-index: 1; pointer-events: none; animation: fall linear forwards; }
         .heart { position: fixed; color: #ff0000; font-size: 1.5rem; user-select: none; z-index: 1; pointer-events: none; animation: float linear forwards; }
         @keyframes fall { to { transform: translateY(105vh); } }
@@ -83,30 +80,30 @@
 
     <div class="slide active" id="s1" style="background-image: url('bg1.jpg');">
         <h1 class="slide-text">hi haze ❤<br>this is for you 💕</h1>
-        <div class="fancy-btn" onclick="startExperience()">Open Your Gift 🎁</div>
+        <div class="fancy-btn" id="btn1">Open Your Gift 🎁</div>
         <img src="tree.png" class="corner-tree">
     </div>
 
     <div class="slide" id="s2" style="background-image: url('bg2.jpg');">
         <p class="slide-text">Merry Christmas, babe. I wish I was there with you right now, but even from far away, I’m thinking about you and missing you like crazy. I hope you’re smiling and feeling happy today, because that’s all I want. Can’t wait for the day we get to celebrate together and make our own little Christmas memories. Until then, just know you’re in my heart all the time, and I love you so much.</p>
-        <div class="fancy-btn" onclick="goToSlide(3)">For your family ✨</div>
+        <div class="fancy-btn" id="btn2">For your family ✨</div>
     </div>
 
     <div class="slide" id="s3" style="background-image: url('bg3.jpg');">
         <div class="card-container">
-            <div class="card-inner" id="myCard" onclick="flipCard()">
+            <div class="card-inner" id="myCard">
                 <div class="card-face card-front">
                     <p style="color: #8b0000; font-weight: bold; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 10px;">(Tap to Open 🎁)</p>
                 </div>
                 <div class="card-face card-inside">
-                    <p class="inside-text">Merry Christmas to you both. I know this is your first Christmas without her, and I can’t imagine how difficult that is. I just wanted you to know that you’re in my thoughts, and I hope today brings even a little warmth and comfort to your hearts. Wishing your family strength and peace.</p>
+                    <p style="font-size: 1.25rem; color: #8b0000; background: rgba(255,255,255,0.7); padding: 10px; border-radius: 10px;">Merry Christmas to you both. I know this is your first Christmas without her, and I can’t imagine how difficult that is. I just wanted you to know that you’re in my thoughts, and I hope today brings even a little warmth and comfort to your hearts. Wishing your family strength and peace.</p>
                 </div>
                 <div class="card-face card-back">
                     <p style="color: #8b0000; font-weight: bold; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 10px;">Merry Christmas 🎄</p>
                 </div>
             </div>
         </div>
-        <div class="fancy-btn" onclick="goToSlide(4)">One last thing... 💖</div>
+        <div class="fancy-btn" id="btn3" style="margin-top: 20px;">One last thing... 💖</div>
     </div>
 
     <div class="slide" id="s4" style="background-image: url('bg4.jpeg'); background-color: #111;">
@@ -115,32 +112,41 @@
     </div>
 
     <script>
-        let currentFlip = 0;
         const song = document.getElementById('mySong');
+        let currentFlip = 0;
 
-        function startExperience() {
+        // BUTTON 1 CLICK
+        document.getElementById('btn1').addEventListener('click', function() {
             song.play();
             goToSlide(2);
-        }
+        });
 
-        function flipCard() {
-            const card = document.getElementById('myCard');
+        // BUTTON 2 CLICK
+        document.getElementById('btn2').addEventListener('click', function() {
+            goToSlide(3);
+        });
+
+        // BUTTON 3 CLICK
+        document.getElementById('btn3').addEventListener('click', function() {
+            goToSlide(4);
+        });
+
+        // CARD CLICK
+        document.getElementById('myCard').addEventListener('click', function() {
             currentFlip++;
-            if (currentFlip === 1) card.classList.add('flip-to-inside');
+            if (currentFlip === 1) this.classList.add('flip-to-inside');
             else if (currentFlip === 2) {
-                card.classList.remove('flip-to-inside');
-                card.classList.add('flip-to-back');
+                this.classList.remove('flip-to-inside');
+                this.classList.add('flip-to-back');
             } else { 
-                card.classList.remove('flip-to-back'); 
+                this.classList.remove('flip-to-back'); 
                 currentFlip = 0; 
             }
-        }
+        });
 
         function goToSlide(num) {
-            const slides = document.querySelectorAll('.slide');
-            slides.forEach(s => s.classList.remove('active'));
-            const nextSlide = document.getElementById('s' + num);
-            if(nextSlide) nextSlide.classList.add('active');
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById('s' + num).classList.add('active');
             if(num >= 2) { startSnow(); startHearts(); }
         }
 
